@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+    <!-- gazebo args -->
+    <arg name="world_name" default="$(find lar_gazebo)/worlds/lar.world"/>
+    <arg name="paused" default="true" doc="Starts gazebo in paused mode" />
+    <arg name="gui" default="true" doc="Starts gazebo gui" />
+    <arg name="hector_slam" default="false" doc="Launch or not hector_slam"/>
+
+    <!--  husky_gazebo args -->
+    <arg name="robot_namespace" default="/"/>
+
+    <!-- Position of Husky -->
+    <arg name="x" default="4.65"/>
+    <arg name="y" default="3.0"/>
+    <arg name="z" default="0.1"/>
+    <arg name="yaw" default="0.0"/>
+
+
+    <!-- include world launch -->
+    <include file="$(find lar_gazebo)/launch/lar_world.launch">
+        <arg name="world_name" value="$(arg world_name)"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="paused" value="$(arg paused)"/>
+    </include>
+
+    <group ns="$(arg robot_namespace)">
+        
+        <include file="$(find husky_control)/launch/control.launch">
+            <arg name= "enable_ekf" value="false"/>
+        </include>
+
+         <!-- <group if="$(arg enable_ekf)" > -->
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
+            <rosparam command="load" file="$(find localization_project)/config/localization/ekf.yaml" />
+        </node>
+        <!-- </group> -->
+        <!-- <env name="HUSKY_URDF_EXTRAS" value="$(find lar_gazebo)/husky_urdf_extras/realsense.urdf.xacro" /> -->
+
+        <node name="spawn_husky_model" pkg="gazebo_ros" type="spawn_model"
+        args="-x $(arg x)
+                -y $(arg y)
+                -z $(arg z)
+                -Y $(arg yaw)
+                -unpause
+                -urdf
+                -param robot_description
+                -model husky
+                -robot_namespace $(arg robot_namespace)" />
+
+    </group>
+
+
+    <arg name="launch_prefix" default="" />
+
+    <arg name="camera_name" default="realsense" />
+    <arg name="image_topic" default="color/image_raw" />
+    <arg name="camera_info_topic" default="color/camera_info" />
+    <arg name="queue_size" default="1" />
+
+    <node pkg="apriltag_ros" type="apriltag_ros_continuous_node" name="apriltag_ros_continuous_node" clear_params="true" output="screen" launch-prefix="$(arg launch_prefix)">
+        <remap from="image_rect" to="/$(arg camera_name)/$(arg image_topic)" />
+        <remap from="camera_info" to="/$(arg camera_name)/$(arg camera_info_topic)" />
+
+        <param name="publish_tag_detections_image" type="bool" value="false" /><!-- default: false -->
+        <param name="queue_size" type="int" value="$(arg queue_size)" />
+
+        <rosparam command="load" file="$(find localization_project)/config/apriltag_ros/settings.yaml"/>
+        <rosparam command="load" file="$(find localization_project)/config/apriltag_ros/tags.yaml"/>
+    </node>
+
+
+</launch>
