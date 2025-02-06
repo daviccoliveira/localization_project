@@ -31,13 +31,12 @@
             <arg name= "enable_ekf" value="false"/>
         </include>
 
-         <!-- <group if="$(arg enable_ekf)" > -->
         <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
             <rosparam command="load" file="$(find localization_project)/config/localization/ekf.yaml" />
         </node>
-        <!-- </group> -->
-        <!-- <env name="HUSKY_URDF_EXTRAS" value="$(find lar_gazebo)/husky_urdf_extras/realsense.urdf.xacro" /> -->
 
+        <!-- <env name="HUSKY_URDF_EXTRAS" value="$(find lar_gazebo)/husky_urdf_extras/realsense.urdf.xacro" /> -->
+        
         <node name="spawn_husky_model" pkg="gazebo_ros" type="spawn_model"
         args="-x $(arg x)
                 -y $(arg y)
@@ -51,6 +50,7 @@
 
     </group>
 
+    <!-- <include file="$(find husky_gazebo)/launch/realsense.launch" /> -->
 
     <arg name="launch_prefix" default="" />
 
@@ -63,12 +63,20 @@
         <remap from="image_rect" to="/$(arg camera_name)/$(arg image_topic)" />
         <remap from="camera_info" to="/$(arg camera_name)/$(arg camera_info_topic)" />
 
-        <param name="publish_tag_detections_image" type="bool" value="true" /><!-- default: false -->
+        <param name="publish_tag_detections_image" type="bool" value="false" />
         <param name="queue_size" type="int" value="$(arg queue_size)" />
 
         <rosparam command="load" file="$(find localization_project)/config/apriltag_ros/settings.yaml"/>
         <rosparam command="load" file="$(find localization_project)/config/apriltag_ros/tags.yaml"/>
     </node>
+    
+    <include file="$(find husky_viz)/launch/view_robot.launch">
+    </include>
 
+    <!-- <include file="$(find husky_navigation)/launch/move_base_mapless_demo.launch">
+    </include> -->
+
+    <!-- <node pkg="localization_project" type="marker2pointcloud" name="marker2pointcloud" clear_params="true" output="screen" launch-prefix="$(arg launch_prefix)">
+    </node> -->
 
 </launch>

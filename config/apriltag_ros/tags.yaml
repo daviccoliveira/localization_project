@@ -21,16 +21,16 @@
 #   ]
 standalone_tags:
   [
-    {id: 0, size: 0.5, name: tag0}, 
-    {id: 1, size: 0.5, name: tag1},
-    {id: 2, size: 0.5, name: tag2},
-    {id: 3, size: 0.5, name: tag3},
-    {id: 4, size: 0.5, name: tag4},
-    {id: 5, size: 0.5, name: tag5},
-    {id: 6, size: 0.5, name: tag6},
-    {id: 7, size: 0.5, name: tag7},
-    {id: 8, size: 0.5, name: tag8},
-    {id: 9, size: 0.5, name: tag9}
+    {id: 0, size: 0.5}, 
+    {id: 1, size: 0.5},
+    {id: 2, size: 0.5},
+    {id: 3, size: 0.5},
+    {id: 4, size: 0.5},
+    {id: 5, size: 0.5},
+    {id: 6, size: 0.5},
+    {id: 7, size: 0.5},
+    {id: 8, size: 0.5},
+    {id: 9, size: 0.5}
   ]
 # ## Tag bundle definitions
 # ### Remarks
