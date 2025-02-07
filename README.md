@@ -1,27 +1,27 @@
 # localization_project
 
 
-Install catkin build tools
+### Install catkin build tools
 
 sudo apt-get install python3-catkin-tools
 
-Clone lar_ufba repo
+### Clone all repos
 
-https://github.com/lar-deeufba/lar_gazebo/tree/noetic
+git clone https://github.com/lar-deeufba/lar_gazebo.git
+cd lar_gazebo
+git checkout noetic
+cd ..
 
-Install apriltag 
+git clone https://github.com/AprilRobotics/apriltag.git
+git clone https://github.com/AprilRobotics/apriltag_ros.git
 
-git clone https://github.com/AprilRobotics/apriltag.git      # Clone Apriltag library
-git clone https://github.com/AprilRobotics/apriltag_ros.git  # Clone Apriltag ROS wrapper
-cd ~/catkin_ws                          # Navigate to the workspace
-rosdep install --from-paths src --ignore-src -r -y  # Install any missing packages
-catkin build    # Build all packages in the workspace (catkin_make_isolated will work also)
-
-
-Install deps
+### Install deps
 
 rosdep init
 rosdep update
-rosdep install --from-paths src/lar_gazebo --ignore-src -r -y --rosdistro noetic
+rosdep install --from-paths src --ignore-src -r -y 
 
+### Build
 
+cd ~/<catkin_ws>
+catkin build

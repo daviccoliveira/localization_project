@@ -35,7 +35,7 @@
             <rosparam command="load" file="$(find localization_project)/config/localization/ekf.yaml" />
         </node>
 
-        <!-- <env name="HUSKY_URDF_EXTRAS" value="$(find lar_gazebo)/husky_urdf_extras/realsense.urdf.xacro" /> -->
+        <env name="HUSKY_URDF_EXTRAS" value="$(find localization_project)/husky_urdf_extras/realsense.urdf.xacro" />
         
         <node name="spawn_husky_model" pkg="gazebo_ros" type="spawn_model"
         args="-x $(arg x)
@@ -49,8 +49,6 @@
                 -robot_namespace $(arg robot_namespace)" />
 
     </group>
-
-    <!-- <include file="$(find husky_gazebo)/launch/realsense.launch" /> -->
 
     <arg name="launch_prefix" default="" />
 
@@ -73,10 +71,7 @@
     <include file="$(find husky_viz)/launch/view_robot.launch">
     </include>
 
-    <!-- <include file="$(find husky_navigation)/launch/move_base_mapless_demo.launch">
-    </include> -->
-
-    <!-- <node pkg="localization_project" type="marker2pointcloud" name="marker2pointcloud" clear_params="true" output="screen" launch-prefix="$(arg launch_prefix)">
-    </node> -->
+    <include file="$(find husky_navigation)/launch/move_base_mapless_demo.launch">
+    </include>
 
 </launch>
