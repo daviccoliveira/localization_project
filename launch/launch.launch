@@ -35,7 +35,7 @@
             <rosparam command="load" file="$(find localization_project)/config/localization/ekf.yaml" />
         </node>
 
-        <env name="HUSKY_URDF_EXTRAS" value="$(find localization_project)/husky_urdf_extras/realsense.urdf.xacro" />
+        <env name="HUSKY_URDF_EXTRAS" value="$(find localization_project)/urdf/realsense.urdf.xacro" />
         
         <node name="spawn_husky_model" pkg="gazebo_ros" type="spawn_model"
         args="-x $(arg x)
