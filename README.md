@@ -38,9 +38,10 @@ git clone https://github.com/AprilRobotics/apriltag_ros.git
 
 Para iniciar os testes, execute os seguintes comandos:
 
-1. **Configurar a URDF do Husky**  
+1. **Configurar a URDF do Husky para ativar camera nativa**  
    ```bash
-   export HUSKY_URDF_EXTRAS=/root/catkin_ws/src/lar_gazebo/husky_urdf_extras/realsense.urdf.xacro
+   cd /catkin_ws/src/lar_gazebo
+   sh husky_accessories.sh 
    ```
 
 2. **Iniciar o Simulador do Husky com o Gazebo**
